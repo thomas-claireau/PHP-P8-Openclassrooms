@@ -1,5 +1,9 @@
 # [PHP] - P8 Openclassrooms - Améliorez une application existante de ToDo & Co
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8d419ad43d7f4a089a22d7dd81f265e1)](https://www.codacy.com/manual/thomas-claireau/PHP-P8-Openclassrooms?utm_source=github.com&utm_medium=referral&utm_content=thomas-claireau/PHP-P8-Openclassrooms&utm_campaign=Badge_Grade)
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/bf44758efb762dc82604/maintainability)](https://codeclimate.com/github/thomas-claireau/PHP-P8-Openclassrooms/maintainability)
+
 ## Contexte
 
 Vous venez d’intégrer une startup dont le coeur de métier est une application permettant de gérer ses tâches quotidiennes. L’entreprise vient tout juste d’être montée, et l’application a dû être développée à toute vitesse pour permettre de montrer à de potentiels investisseurs que le concept est viable (on parle de Minimum Viable Product ou MVP). Le choix du développeur précédent a été d’utiliser le framework PHP Symfony, un framework que vous commencez à bien connaître ;) !
@@ -33,8 +37,8 @@ Pour les tâches déjà créées, il faut qu’elles soient rattachées à un ut
 
 Lors de la création d’un utilisateur, il doit être possible de choisir un rôle pour celui-ci. Les rôles listés sont les suivants :
 
-- rôle utilisateur (ROLE_USER)
-- rôle administrateur (ROLE_ADMIN)
+-   rôle utilisateur (ROLE_USER)
+-   rôle administrateur (ROLE_ADMIN)
 
 Lors de la modification d’un utilisateur, il est également possible de changer le rôle d’un utilisateur.
 
@@ -42,29 +46,29 @@ Lors de la modification d’un utilisateur, il est également possible de change
 
 #### Autorisation
 
-Seuls les utilisateurs ayant le rôle  rôle administrateur (ROLE_ADMIN) doivent pouvoir accéder aux pages de gestion des utilisateurs.
+Seuls les utilisateurs ayant le rôle rôle administrateur (ROLE_ADMIN) doivent pouvoir accéder aux pages de gestion des utilisateurs.
 
-- Les tâches ne peuvent être supprimées que par les utilisateurs ayant créé les tâches en questions.
+-   Les tâches ne peuvent être supprimées que par les utilisateurs ayant créé les tâches en questions.
 
-- Les tâches rattachées à l’utilisateur “anonyme” ne peuvent être supprimées uniquement par les utilisateurs ayant le rôle administrateur (ROLE_ADMIN).
+-   Les tâches rattachées à l’utilisateur “anonyme” ne peuvent être supprimées uniquement par les utilisateurs ayant le rôle administrateur (ROLE_ADMIN).
 
 #### Implémentation de tests automatisés
 
 Il vous est demandé d’implémenter les tests automatisés (test unitaires et fonctionnels) nécessaires à assurer que le fonctionnement de l’application est bien en adéquation avec les demandes.
 
-- Ces tests doivent être implémentés avec PHPUnit, vous pouvez aussi utiliser Behat pour la partie fonctionnelle.
+-   Ces tests doivent être implémentés avec PHPUnit, vous pouvez aussi utiliser Behat pour la partie fonctionnelle.
 
-- Vous prévoirez des données de tests afin de pouvoir prouver le fonctionnement dans les cas explicités dans ce document.
+-   Vous prévoirez des données de tests afin de pouvoir prouver le fonctionnement dans les cas explicités dans ce document.
 
-- Il vous est demandé de fournir un rapport de couverture de code au terme du projet. Il faut que le taux de couverture soit supérieur à 70%.
+-   Il vous est demandé de fournir un rapport de couverture de code au terme du projet. Il faut que le taux de couverture soit supérieur à 70%.
 
 ## Documentation technique
 
 Il vous est demandé de produire une documentation expliquant comment l’implémentation de l'authentification a été faite. Cette documentation se destine aux prochains développeurs juniors qui rejoindront l’équipe dans quelques semaines. Dans cette documentation, il doit être possible pour un débutant avec le framework Symfony de :
 
-- comprendre quel(s) fichier(s) il faut modifier et pourquoi ;
-- comment s’opère l’authentification ;
-- et où sont stockés les utilisateurs.
+-   comprendre quel(s) fichier(s) il faut modifier et pourquoi ;
+-   comment s’opère l’authentification ;
+-   et où sont stockés les utilisateurs.
 
 Si d’autres informations vous semble importantes d’être mentionnées, n’hésitez pas à le faire.
 
