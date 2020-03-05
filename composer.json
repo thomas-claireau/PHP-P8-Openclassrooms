@@ -1,25 +1,7 @@
 {
-	"name": "thomas-claireau/bilemo",
-	"version": "1.0.0",
-	"description": "package manager for my project",
+	"name": "thomas-claireau/todo",
+	"license": "proprietary",
 	"type": "project",
-	"keywords": [
-		"symfony",
-		"todo",
-		"web",
-		"application",
-		"php",
-		"mvc"
-	],
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Thomas Claireau",
-			"email": "thomas.claireau@gmail.com",
-			"role": "Fullstack web developer"
-		}
-	],
-	"minimum-stability": "dev",
 	"autoload": {
 		"psr-4": {
 			"": "src/"
@@ -36,7 +18,7 @@
 	},
 	"require": {
 		"php": ">=5.5.9",
-		"symfony/symfony": "3.1.*",
+		"symfony/symfony": "^4.2",
 		"doctrine/orm": "^2.5",
 		"doctrine/doctrine-bundle": "^1.6",
 		"doctrine/doctrine-cache-bundle": "^1.2",
@@ -49,7 +31,7 @@
 	},
 	"require-dev": {
 		"sensio/generator-bundle": "^3.0",
-		"symfony/phpunit-bridge": "^3.0"
+		"symfony/phpunit-bridge": "^4.2"
 	},
 	"scripts": {
 		"symfony-scripts": [
