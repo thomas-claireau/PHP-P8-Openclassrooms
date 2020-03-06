@@ -1,53 +1,68 @@
 {
 	"name": "thomas-claireau/todo",
+	"description": "package description",
 	"license": "proprietary",
 	"type": "project",
 	"autoload": {
 		"psr-4": {
-			"": "src/"
-		},
-		"classmap": [
-			"app/AppKernel.php",
-			"app/AppCache.php"
-		]
+			"App\\": "src/"
+		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Tests\\": "tests/"
+			"App\\Tests\\": "tests/"
 		}
 	},
 	"require": {
-		"php": ">=5.5.9",
-		"symfony/symfony": "3.1.*",
-		"doctrine/orm": "^2.5",
-		"doctrine/doctrine-bundle": "^1.6",
-		"doctrine/doctrine-cache-bundle": "^1.2",
-		"symfony/swiftmailer-bundle": "^2.3",
-		"symfony/monolog-bundle": "^2.8",
+		"php": "^7.1.3",
+		"ext-ctype": "*",
+		"ext-iconv": "*",
+		"fzaninotto/faker": "^1.9",
+		"guzzlehttp/psr7": "^1.6",
+		"php-http/guzzle6-adapter": "^2.0",
+		"symfony/swiftmailer-bundle": "^3.3.1",
+		"symfony/monolog-bundle": "3.4.0",
 		"symfony/polyfill-apcu": "^1.0",
-		"sensio/distribution-bundle": "^5.0",
+		"symfony/apache-pack": "^1.0",
+		"symfony/asset": "4.2.*",
+		"symfony/cache": "4.2.12",
+		"symfony/console": "4.2.*",
+		"symfony/dotenv": "4.2.*",
+		"symfony/expression-language": "4.2.*",
+		"symfony/flex": "^1.3.1",
+		"symfony/form": "4.2.*",
+		"symfony/framework-bundle": "4.2.*",
+		"symfony/http-foundation": "4.2.12",
+		"symfony/orm-pack": "*",
+		"symfony/process": "4.2.*",
+		"symfony/security-bundle": "4.2.*",
+		"symfony/serializer-pack": "*",
+		"symfony/translation": "4.2.*",
+		"symfony/twig-bundle": "4.2.*",
+		"symfony/validator": "4.2.*",
+		"symfony/web-link": "4.2.*",
+		"symfony/yaml": "4.2.*",
 		"sensio/framework-extra-bundle": "^3.0.2",
-		"incenteev/composer-parameter-handler": "^2.0"
+		"incenteev/composer-parameter-handler": "^2.0",
+		"symfony/webpack-encore-bundle": "^1.7",
+		"symfony/templating": "4.2.*",
+		"symfony/web-server-bundle": "4.2.*"
 	},
 	"require-dev": {
-		"sensio/generator-bundle": "^3.0",
-		"symfony/phpunit-bridge": "^4.2"
+		"symfony/maker-bundle": "^1.14.6",
+		"doctrine/doctrine-fixtures-bundle": "3.0.2",
+		"symfony/debug-pack": "*",
+		"symfony/profiler-pack": "*",
+		"symfony/test-pack": "*"
 	},
-	"scripts": {
-		"symfony-scripts": [
-			"Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
-		],
-		"post-install-cmd": [
-			"@symfony-scripts"
-		],
-		"post-update-cmd": [
-			"@symfony-scripts"
-		]
+	"config": {
+		"preferred-install": {
+			"*": "dist"
+		},
+		"sort-packages": true
+	},
+	"conflict": {
+		"symfony/symfony": "*"
 	},
 	"extra": {
 		"symfony-app-dir": "app",
@@ -58,6 +73,24 @@
 		"symfony-assets-install": "relative",
 		"incenteev-parameters": {
 			"file": "app/config/parameters.yml"
+		},
+		"symfony": {
+			"allow-contrib": false,
+			"require": "4.2.*"
 		}
+	},
+	"scripts": {
+		"auto-scripts": {
+			"cache:clear": "symfony-cmd",
+			"assets:install %PUBLIC_DIR%": "symfony-cmd"
+		}
+	},
+	"replace": {
+		"paragonie/random_compat": "2.*",
+		"symfony/polyfill-ctype": "*",
+		"symfony/polyfill-iconv": "*",
+		"symfony/polyfill-php71": "*",
+		"symfony/polyfill-php70": "*",
+		"symfony/polyfill-php56": "*"
 	}
 }
