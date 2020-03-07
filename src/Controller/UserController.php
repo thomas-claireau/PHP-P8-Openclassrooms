@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,9 +14,9 @@ class UserController extends Controller
 	/**
 	 * @Route("/users", name="user_list")
 	 */
-	public function listAction()
+	public function listAction(UserRepository $userRepository)
 	{
-		return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('App:User')->findAll()]);
+		return $this->render('user/list.html.twig', ['users' => $userRepository->findUsers()]);
 	}
 
 	/**

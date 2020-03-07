@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Task;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Task|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +15,15 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class TaskRepository extends ServiceEntityRepository
 {
-	public function __construct(ManagerRegistry $registry)
+	/**
+	 * @var UserRepository
+	 */
+	private $userRepository;
+
+	public function __construct(ManagerRegistry $registry, UserRepository $userRepository)
 	{
 		parent::__construct($registry, Task::class);
+		$this->userRepository = $userRepository;
 	}
 
 	public function resetIndex()
@@ -37,9 +44,12 @@ class TaskRepository extends ServiceEntityRepository
 
 	private function getQueryDateDesc($user)
 	{
+		$anonymousUser = $this->userRepository->findOneBy(['username' => 'anonyme']);
+
 		$query = $this->createQueryBuilder('p')
-			->where('p.user = :user')
-			->setParameter('user', $user)
+			->where('p.user = :anonymous_user')
+			->orWhere('p.user = :user')
+			->setParameters(['anonymous_user' => $anonymousUser, 'user' => $user])
 			->orderBy('p.updated_at', 'DESC');
 
 		return $query;
