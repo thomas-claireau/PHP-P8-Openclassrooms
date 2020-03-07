@@ -9,7 +9,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 /**
  * @method Task|null find($id, $lockMode = null, $lockVersion = null)
  * @method Task|null findOneBy(array $criteria, array $orderBy = null)
- * @method Task[]    findAll()
+ * @method Task[]    findAllByUser()
  * @method Task[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class TaskRepository extends ServiceEntityRepository
@@ -28,16 +28,20 @@ class TaskRepository extends ServiceEntityRepository
 	/**
 	 * @return Task[]
 	 */
-	public function findAll(): array
+	public function findAllByUser($user): array
 	{
-		return $this->getQueryDesc()
+		return $this->getQueryDateDesc($user)
 			->getQuery()
 			->getResult();
 	}
 
-	private function getQueryDesc()
+	private function getQueryDateDesc($user)
 	{
-		return $this->createQueryBuilder('p')
-			->orderBy('p.id', 'DESC');
+		$query = $this->createQueryBuilder('p')
+			->where('p.user = :user')
+			->setParameter('user', $user)
+			->orderBy('p.updated_at', 'DESC');
+
+		return $query;
 	}
 }

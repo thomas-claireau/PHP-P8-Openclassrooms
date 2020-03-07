@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
+use App\Repository\TaskRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,9 +21,10 @@ class TaskController extends AbstractController
 	/**
 	 * @Route("/tasks", name="task_list")
 	 */
-	public function listAction()
+	public function listAction(TaskRepository $taskRepository)
 	{
-		return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository('App:Task')->findAll()]);
+		$user = $this->security->getUser();
+		return $this->render('task/list.html.twig', ['tasks' => $taskRepository->findAllByUser($user)]);
 	}
 
 	/**
@@ -67,6 +69,7 @@ class TaskController extends AbstractController
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
+			$task->setUpdatedAt(new \DateTime());
 			$this->getDoctrine()->getManager()->flush();
 
 			$this->addFlash('success', 'La tâche a bien été modifiée.');
@@ -86,6 +89,7 @@ class TaskController extends AbstractController
 	public function toggleTaskAction(Task $task)
 	{
 		$task->toggle(!$task->isDone());
+		$task->setUpdatedAt(new \DateTime());
 		$this->getDoctrine()->getManager()->flush();
 
 		$this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
