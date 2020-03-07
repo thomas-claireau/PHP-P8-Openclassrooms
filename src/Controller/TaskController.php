@@ -4,12 +4,22 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class TaskController extends Controller
+class TaskController extends AbstractController
 {
+	private $security;
+
+	public function __construct(Security $security)
+	{
+		// Avoid calling getUser() in the constructor: auth may not
+		// be complete yet. Instead, store the entire Security object.
+		$this->security = $security;
+	}
 	/**
 	 * @Route("/tasks", name="task_list")
 	 */
@@ -23,6 +33,11 @@ class TaskController extends Controller
 	 */
 	public function createAction(Request $request)
 	{
+		$user = $this->security->getUser();
+		if (!$user) return;
+
+		$date = new \DateTime();
+
 		$task = new Task();
 		$form = $this->createForm(TaskType::class, $task);
 
@@ -30,6 +45,9 @@ class TaskController extends Controller
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
+			$task->setCreatedAt($date);
+			$task->setUpdatedAt($date);
+			$task->setUser($user);
 
 			$em->persist($task);
 			$em->flush();
