@@ -40,6 +40,17 @@ class Task
 	 */
 	private $isDone;
 
+	/**
+	 * @ORM\Column(type="datetime")
+	 */
+	private $updated_at;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
+	 * @ORM\JoinColumn(nullable=false)
+	 */
+	private $user;
+
 	public function __construct()
 	{
 		$this->createdAt = new \Datetime();
@@ -89,5 +100,29 @@ class Task
 	public function toggle($flag)
 	{
 		$this->isDone = $flag;
+	}
+
+	public function getUpdatedAt(): ?\DateTimeInterface
+	{
+		return $this->updated_at;
+	}
+
+	public function setUpdatedAt(\DateTimeInterface $updated_at): self
+	{
+		$this->updated_at = $updated_at;
+
+		return $this;
+	}
+
+	public function getUser(): ?User
+	{
+		return $this->user;
+	}
+
+	public function setUser(?User $user): self
+	{
+		$this->user = $user;
+
+		return $this;
 	}
 }

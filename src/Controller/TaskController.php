@@ -4,18 +4,27 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Repository\TaskRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class TaskController extends Controller
+class TaskController extends AbstractController
 {
+	private $security;
+
+	public function __construct(Security $security)
+	{
+		$this->security = $security;
+	}
 	/**
 	 * @Route("/tasks", name="task_list")
 	 */
-	public function listAction()
+	public function listAction(TaskRepository $taskRepository)
 	{
-		return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository('App:Task')->findAll()]);
+		$user = $this->security->getUser();
+		return $this->render('task/list.html.twig', ['tasks' => $taskRepository->findAllByUser($user)]);
 	}
 
 	/**
@@ -23,13 +32,21 @@ class TaskController extends Controller
 	 */
 	public function createAction(Request $request)
 	{
+		$user = $this->security->getUser();
+		if (!$user) return;
+
+		$date = new \DateTime();
+
 		$task = new Task();
 		$form = $this->createForm(TaskType::class, $task);
 
 		$form->handleRequest($request);
 
-		if ($form->isValid()) {
+		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
+			$task->setCreatedAt($date);
+			$task->setUpdatedAt($date);
+			$task->setUser($user);
 
 			$em->persist($task);
 			$em->flush();
@@ -51,7 +68,8 @@ class TaskController extends Controller
 
 		$form->handleRequest($request);
 
-		if ($form->isValid()) {
+		if ($form->isSubmitted() && $form->isValid()) {
+			$task->setUpdatedAt(new \DateTime());
 			$this->getDoctrine()->getManager()->flush();
 
 			$this->addFlash('success', 'La tâche a bien été modifiée.');
@@ -71,6 +89,7 @@ class TaskController extends Controller
 	public function toggleTaskAction(Task $task)
 	{
 		$task->toggle(!$task->isDone());
+		$task->setUpdatedAt(new \DateTime());
 		$this->getDoctrine()->getManager()->flush();
 
 		$this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
