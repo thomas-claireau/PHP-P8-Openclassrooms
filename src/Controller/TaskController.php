@@ -6,7 +6,6 @@ use App\Entity\Task;
 use App\Form\TaskType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -16,8 +15,6 @@ class TaskController extends AbstractController
 
 	public function __construct(Security $security)
 	{
-		// Avoid calling getUser() in the constructor: auth may not
-		// be complete yet. Instead, store the entire Security object.
 		$this->security = $security;
 	}
 	/**

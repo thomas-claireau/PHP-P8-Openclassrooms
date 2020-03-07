@@ -40,89 +40,89 @@ class Task
 	 */
 	private $isDone;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $updated_at;
+	/**
+	 * @ORM\Column(type="datetime")
+	 */
+	private $updated_at;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
+	/**
+	 * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
+	 * @ORM\JoinColumn(nullable=false)
+	 */
+	private $user;
 
 	public function __construct()
-                  	{
-                  		$this->createdAt = new \Datetime();
-                  		$this->isDone = false;
-                  	}
+	{
+		$this->createdAt = new \Datetime();
+		$this->isDone = false;
+	}
 
 	public function getId()
-                  	{
-                  		return $this->id;
-                  	}
+	{
+		return $this->id;
+	}
 
 	public function getCreatedAt()
-                  	{
-                  		return $this->createdAt;
-                  	}
+	{
+		return $this->createdAt;
+	}
 
 	public function setCreatedAt($createdAt)
-                  	{
-                  		$this->createdAt = $createdAt;
-                  	}
+	{
+		$this->createdAt = $createdAt;
+	}
 
 	public function getTitle()
-                  	{
-                  		return $this->title;
-                  	}
+	{
+		return $this->title;
+	}
 
 	public function setTitle($title)
-                  	{
-                  		$this->title = $title;
-                  	}
+	{
+		$this->title = $title;
+	}
 
 	public function getContent()
-                  	{
-                  		return $this->content;
-                  	}
+	{
+		return $this->content;
+	}
 
 	public function setContent($content)
-                  	{
-                  		$this->content = $content;
-                  	}
+	{
+		$this->content = $content;
+	}
 
 	public function isDone()
-                  	{
-                  		return $this->isDone;
-                  	}
+	{
+		return $this->isDone;
+	}
 
 	public function toggle($flag)
-                  	{
-                  		$this->isDone = $flag;
-                  	}
+	{
+		$this->isDone = $flag;
+	}
 
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updated_at;
-    }
+	public function getUpdatedAt(): ?\DateTimeInterface
+	{
+		return $this->updated_at;
+	}
 
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
-    {
-        $this->updated_at = $updated_at;
+	public function setUpdatedAt(\DateTimeInterface $updated_at): self
+	{
+		$this->updated_at = $updated_at;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
+	public function getUser(): ?User
+	{
+		return $this->user;
+	}
 
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
+	public function setUser(?User $user): self
+	{
+		$this->user = $user;
 
-        return $this;
-    }
+		return $this;
+	}
 }
