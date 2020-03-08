@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<div class="row">
+	<div class="row" style="margin-bottom: 20px">
 		<a href="{{ path('task_create') }}" class="btn btn-info pull-right">Créer une tâche</a>
 	</div>
 	<div class="row tasks">
@@ -23,8 +23,9 @@
 							<a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a>
 						</h4>
 						<div class="inner">
-							<p class="date">11/09/2019</p>
-							<p class="author">Auteur : Anonyme</p>
+							<p class="date">{{ task.updatedAt|date("d/m/Y") }}</p>
+							<p class="author">Auteur :
+								{{ task.user.username }}</p>
 							<p class="portlet-content content">{{ task.content }}</p>
 						</div>
 						<div class="footer">

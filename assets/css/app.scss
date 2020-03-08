@@ -21,7 +21,8 @@ body {
 	margin: auto;
 }
 
-form[name='user'] {
+form[name='user'],
+form[name='task'] {
 	max-width: 650px;
 	margin: auto;
 }
