@@ -8,14 +8,32 @@ use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 
 class UserController extends Controller
 {
+	private $security;
+
+	/**
+	 * @var User;
+	 */
+	private $actualUser;
+
+	public function __construct(Security $security)
+	{
+		$this->security = $security;
+		$this->actualUser = $this->security->getUser();
+	}
 	/**
 	 * @Route("/users", name="user_list")
 	 */
 	public function listAction(UserRepository $userRepository)
 	{
+		if ($this->actualUser->getRole() !== '["ROLE_ADMIN"]') {
+			$this->addFlash('error', 'Vous ne pouvez pas accéder à cette partie du site');
+			return $this->redirectToRoute('homepage');
+		}
+
 		return $this->render('user/list.html.twig', ['users' => $userRepository->findUsers()]);
 	}
 
@@ -24,6 +42,11 @@ class UserController extends Controller
 	 */
 	public function createAction(Request $request)
 	{
+		if ($this->actualUser->getRole() !== '["ROLE_ADMIN"]') {
+			$this->addFlash('error', 'Vous ne pouvez pas accéder à cette partie du site');
+			return $this->redirectToRoute('homepage');
+		}
+
 		$user = new User();
 		$form = $this->createForm(UserType::class, $user);
 
@@ -37,7 +60,7 @@ class UserController extends Controller
 			$em->persist($user);
 			$em->flush();
 
-			$this->addFlash('success', "L'utilisateur a bien été ajouté.");
+			$this->addFlash('success', 'L\'utilisateur a bien été ajouté.');
 
 			return $this->redirectToRoute('user_list');
 		}
@@ -50,6 +73,11 @@ class UserController extends Controller
 	 */
 	public function editAction(User $user, Request $request)
 	{
+		if ($this->actualUser->getRole() !== '["ROLE_ADMIN"]') {
+			$this->addFlash('error', 'Vous ne pouvez pas accéder à cette partie du site');
+			return $this->redirectToRoute('homepage');
+		}
+
 		$form = $this->createForm(UserType::class, $user);
 
 		$form->handleRequest($request);
@@ -60,7 +88,7 @@ class UserController extends Controller
 
 			$this->getDoctrine()->getManager()->flush();
 
-			$this->addFlash('success', "L'utilisateur a bien été modifié");
+			$this->addFlash('success', 'L\'utilisateur a bien été modifié');
 
 			return $this->redirectToRoute('user_list');
 		}
