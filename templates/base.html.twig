@@ -10,7 +10,7 @@
 
 		<title>To Do List app</title>
 
-		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 		{{ encore_entry_link_tags('app') }}
 
@@ -19,33 +19,10 @@
 	</head>
 
 	<body>
-		<nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#">To Do List app</a>
-
-					<img src="{{ asset('build/images/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms"/>
-				</div>
-			</div>
-		</nav>
+		{% include "navbar.html.twig" %}
 
 		<!-- Page Content -->
-		<div class="container">
-			<div class="row">
-				{% if app.user and app.user.role == '["ROLE_ADMIN"]' %}
-					<a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
-				{% endif %}
-
-
-				{% if app.user %}
-					<a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
-				{% endif %}
-
-				{% if not app.user and 'login' != app.request.attributes.get('_route') %}
-					<a href="{{ path('login') }}" class="btn btn-success">Se connecter</a>
-				{% endif %}
-			</div>
-
+		<div id="page-body" class="container">
 			<div class="row">
 				<div class="col-md-12">
 					{% for flash_message in app.session.flashBag.get('success') %}
@@ -62,9 +39,21 @@
 						</div>
 					{% endfor %}
 
-					{% block header_title %}{% endblock %}
-					{% block header_img %}<img class="slide-image" src="{{ asset('build/images/todolist_homepage.jpg') }}" alt="todo list">
+					{% block header_title %}
+						<div style="margin-bottom: 50px">
+							<h1 class="text-center">Bienvenue sur Todo List</h1>
+							<div class="description text-center">L'application vous permettant de gérer l'ensemble de vos tâches sans effort !</div>
+						</div>
 					{% endblock %}
+
+					{% if app.request.attributes.get('_route') != 'login' %}
+						{% block header_img %}
+							<div class="text-center">
+								<img class="slide-image text-center" src="{{ asset('build/images/todolist_homepage.jpg') }}" alt="todo list">
+							</div>
+						{% endblock %}
+					{% endif %}
+
 				</div>
 			</div>
 
@@ -90,7 +79,7 @@
 
 			</div>
 			<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 			{{ encore_entry_script_tags('app') }}
 		</body>
 	</html>

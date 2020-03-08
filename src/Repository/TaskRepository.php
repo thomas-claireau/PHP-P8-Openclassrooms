@@ -42,7 +42,27 @@ class TaskRepository extends ServiceEntityRepository
 			->getResult();
 	}
 
-	private function getQueryDateDesc($user)
+	/**
+	 * @return Task[]
+	 */
+	public function findTodoByUser($user): array
+	{
+		return $this->getQueryDateDesc($user, 0)
+			->getQuery()
+			->getResult();
+	}
+
+	/**
+	 * @return Task[]
+	 */
+	public function findDoneByUser($user): array
+	{
+		return $this->getQueryDateDesc($user, 1)
+			->getQuery()
+			->getResult();
+	}
+
+	private function getQueryDateDesc($user, $status = null)
 	{
 		$anonymousUser = $this->userRepository->findOneBy(['username' => 'anonyme']);
 
@@ -51,6 +71,12 @@ class TaskRepository extends ServiceEntityRepository
 			->orWhere('p.user = :user')
 			->setParameters(['anonymous_user' => $anonymousUser, 'user' => $user])
 			->orderBy('p.updated_at', 'DESC');
+
+		if (!is_null($status)) {
+			$query
+				->andWhere('p.isDone = :status')
+				->setParameters(['anonymous_user' => $anonymousUser, 'user' => $user, 'status' => $status]);
+		}
 
 		return $query;
 	}
