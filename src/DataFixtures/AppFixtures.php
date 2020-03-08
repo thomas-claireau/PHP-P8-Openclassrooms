@@ -43,10 +43,10 @@ class AppFixtures extends Fixture
 				"password" => "anonyme",
 			],
 			[
-				"username" => "utilisateur",
-				"email" => "utilisateur@todo.fr",
+				"username" => "user",
+				"email" => "user@todo.fr",
 				"role" => '["ROLE_USER"]',
-				"password" => "utilisateur",
+				"password" => "user",
 			],
 		];
 
