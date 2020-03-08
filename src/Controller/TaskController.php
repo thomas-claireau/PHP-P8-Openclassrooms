@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,17 +15,22 @@ class TaskController extends AbstractController
 {
 	private $security;
 
+	/**
+	 * @var User|null
+	 */
+	private $actualUser;
+
 	public function __construct(Security $security)
 	{
 		$this->security = $security;
+		$this->actualUser = $this->security->getUser();
 	}
 	/**
 	 * @Route("/tasks", name="task_list")
 	 */
 	public function listAction(TaskRepository $taskRepository)
 	{
-		$user = $this->security->getUser();
-		return $this->render('task/list.html.twig', ['tasks' => $taskRepository->findAllByUser($user)]);
+		return $this->render('task/list.html.twig', ['tasks' => $taskRepository->findAllByUser($this->actualUser)]);
 	}
 
 	/**
@@ -32,8 +38,7 @@ class TaskController extends AbstractController
 	 */
 	public function createAction(Request $request)
 	{
-		$user = $this->security->getUser();
-		if (!$user) return;
+		if (!$this->actualUser) return;
 
 		$date = new \DateTime();
 
@@ -46,7 +51,7 @@ class TaskController extends AbstractController
 			$em = $this->getDoctrine()->getManager();
 			$task->setCreatedAt($date);
 			$task->setUpdatedAt($date);
-			$task->setUser($user);
+			$task->setUser($this->actualUser);
 
 			$em->persist($task);
 			$em->flush();
@@ -70,6 +75,7 @@ class TaskController extends AbstractController
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$task->setUpdatedAt(new \DateTime());
+			$task->setUser($this->actualUser);
 			$this->getDoctrine()->getManager()->flush();
 
 			$this->addFlash('success', 'La tâche a bien été modifiée.');
@@ -90,6 +96,7 @@ class TaskController extends AbstractController
 	{
 		$task->toggle(!$task->isDone());
 		$task->setUpdatedAt(new \DateTime());
+		$task->setUser($this->actualUser);
 		$this->getDoctrine()->getManager()->flush();
 
 		$this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
@@ -102,6 +109,13 @@ class TaskController extends AbstractController
 	 */
 	public function deleteTaskAction(Task $task)
 	{
+		$user = $task->getUser();
+
+		if ($user !== $this->actualUser) {
+			$this->addFlash('error', 'Vous ne pouvez pas supprimer cette tâche');
+			return $this->redirectToRoute('task_list');
+		}
+
 		$em = $this->getDoctrine()->getManager();
 		$em->remove($task);
 		$em->flush();

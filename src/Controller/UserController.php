@@ -15,7 +15,7 @@ class UserController extends Controller
 	private $security;
 
 	/**
-	 * @var User;
+	 * @var User|null
 	 */
 	private $actualUser;
 
