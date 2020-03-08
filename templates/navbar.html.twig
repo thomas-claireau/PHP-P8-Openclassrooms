@@ -1,0 +1,83 @@
+<nav class="navbar navbar-default">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="nav-link active navbar-brand" href="/">
+				To Do List app
+			</a>
+			<img src="{{ asset('build/images/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms"/>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li class="nav-item active"></li>
+				<li class="nav-item active">
+					<a class="nav-link active" href="/">
+						Accueil
+					</a>
+				</li>
+				{% if app.user %}
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tâches
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="{{ path('task_list') }}">Toutes les tâches</a>
+							</li>
+							<li>
+								<a href="{{ path('task_list_todo') }}">Tâches à effectuer</a>
+							</li>
+							<li>
+								<a href="{{ path('task_list_done') }}">Tâches effectuées</a>
+							</li>
+							<li>
+								<a href="{{ path('task_create') }}">Créer une nouvelle tâche</a>
+							</li>
+						</ul>
+					</li>
+				{% endif %}
+
+				{% if app.user and app.user.role == '["ROLE_ADMIN"]' %}
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Utilisateurs
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="nav-link" href="{{ path('user_list') }}">
+									Liste d'utilisateur
+								</a>
+							</li>
+							<li>
+								<a class="nav-link" href="{{ path('user_create') }}">
+									Créer un utilisateur
+								</a>
+							</li>
+						</ul>
+					</li>
+				{% endif %}
+
+				{% if not app.user %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('login') }}">
+							Se connecter
+						</a>
+					</li>
+				{% else %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('logout') }}">
+							Se déconnecter
+						</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+		<!--/.nav-collapse -->
+	</div>
+	<!--/.container-fluid -->
+</nav>

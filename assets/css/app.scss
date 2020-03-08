@@ -1,0 +1,94 @@
+@import './font-awesome.min.css';
+@import 'vars';
+
+body {
+	min-height: 100vh;
+}
+
+#page-body {
+	padding-bottom: 70px;
+}
+
+.col-md-12 {
+	@media screen and (min-width: $break-tablet) {
+		padding: 0;
+		margin: 0;
+	}
+}
+
+.login-form {
+	max-width: 450px;
+	margin: auto;
+}
+
+form[name='user'] {
+	max-width: 650px;
+	margin: auto;
+}
+
+.slide-image {
+	width: 100%;
+	border-radius: 5px;
+}
+
+.row.tasks {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-column-gap: 10px;
+
+	@media screen and (max-width: $break-large) {
+		display: flex;
+		justify-content: flex-start;
+		align-items: flex-start;
+		flex-wrap: wrap;
+	}
+
+	&:before {
+		content: none;
+	}
+
+	> div {
+		position: relative;
+
+		@media screen and (max-width: $break-large) {
+			width: 33%;
+		}
+
+		@media screen and (max-width: $break-medium) {
+			width: 50%;
+		}
+
+		@media screen and (max-width: $break-tablet) {
+			width: 100%;
+		}
+	}
+}
+
+.thumbnail {
+	.glyphicon {
+		position: absolute;
+		top: 20px;
+		right: 30px;
+		border: 1px solid;
+		border-radius: 500px;
+		padding: 10px;
+		font-size: 16px;
+
+		&.glyphicon-remove {
+			border-color: #ac2925;
+			color: #ac2925;
+		}
+		&.glyphicon-ok {
+			border-color: #398439;
+			color: #398439;
+		}
+	}
+
+	.footer {
+		display: flex;
+
+		> form:last-child {
+			margin-left: 10px;
+		}
+	}
+}

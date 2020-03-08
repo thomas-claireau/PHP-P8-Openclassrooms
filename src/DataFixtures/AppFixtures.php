@@ -63,7 +63,7 @@ class AppFixtures extends Fixture
 			array_push($usersObj, $user);
 		}
 
-		for ($i = 1; $i <= 100; $i++) {
+		for ($i = 1; $i <= 15; $i++) {
 			$isDone = random_int(0, 1);
 			$subTitle = $isDone ? ' réalisée' : ' à faire';
 
