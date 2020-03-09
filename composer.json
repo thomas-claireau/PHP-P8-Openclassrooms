@@ -53,7 +53,8 @@
 		"doctrine/doctrine-fixtures-bundle": "3.0.2",
 		"symfony/debug-pack": "*",
 		"symfony/profiler-pack": "*",
-		"symfony/test-pack": "*"
+		"symfony/test-pack": "*",
+		"symfony/phpunit-bridge": "^5.1@dev"
 	},
 	"config": {
 		"preferred-install": {
@@ -65,15 +66,6 @@
 		"symfony/symfony": "*"
 	},
 	"extra": {
-		"symfony-app-dir": "app",
-		"symfony-bin-dir": "bin",
-		"symfony-var-dir": "var",
-		"symfony-web-dir": "web",
-		"symfony-tests-dir": "tests",
-		"symfony-assets-install": "relative",
-		"incenteev-parameters": {
-			"file": "app/config/parameters.yml"
-		},
 		"symfony": {
 			"allow-contrib": false,
 			"require": "4.2.*"
