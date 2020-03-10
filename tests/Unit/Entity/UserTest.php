@@ -3,11 +3,20 @@
 namespace App\Tests\Unit\Entity;
 
 use App\Entity\User;
-use PHPUnit\Framework\TestCase;
+use App\Entity\Task;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-
-class UserTest extends TestCase
+class UserTest extends WebTestCase
 {
+	private $encoder;
+
+	protected function setUp(): void
+	{
+		static::bootKernel();
+		$container = self::$container;
+
+		$this->encoder = $container->get('security.password_encoder');
+	}
 	/**
 	 * Test id assign task
 	 * 
@@ -37,6 +46,19 @@ class UserTest extends TestCase
 	}
 
 	/**
+	 * Test encode password
+	 * 
+	 * @return void
+	 */
+	public function testEncodePassword()
+	{
+		$user = new User();
+		$password = "test password";
+		$user->setPassword($this->encoder->encodePassword($user, $password));
+		$this->assertTrue($this->encoder->isPasswordValid($user, $password));
+	}
+
+	/**
 	 * Test field password
 	 * 
 	 * @return void
@@ -45,6 +67,9 @@ class UserTest extends TestCase
 	{
 		$user = new User();
 		$password = "test password";
+		$passwordEncode = $this->encoder->encodePassword($user, $password);
+		$user->setPassword($passwordEncode);
+		$this->assertEquals($passwordEncode, $user->getPassword());
 	}
 
 	/**
@@ -55,16 +80,41 @@ class UserTest extends TestCase
 	public function testEmail()
 	{
 		$user = new User();
+		$email = "root@root.fr";
+
+		$user->setEmail($email);
+		$this->assertEquals($email, $user->getEmail());
 	}
 
 	/**
-	 * Test field tasks
+	 * Test add task
 	 * 
 	 * @return void
 	 */
-	public function testTasks()
+	public function testAddTask()
 	{
 		$user = new User();
+		$task = new Task();
+
+		$user->addTask($task);
+		$this->assertEquals($task, $user->getTasks()[0]);
+	}
+
+	/**
+	 * Test remove task
+	 * 
+	 * @return void
+	 */
+	public function testRemoveTask()
+	{
+		$user = new User();
+		$task = new Task();
+
+		$user->addTask($task);
+		$this->assertEquals($task, $user->getTasks()[0]);
+
+		$user->removeTask($task);
+		$this->assertEquals([], $user->getTasks()->toArray());
 	}
 
 	/**
@@ -75,5 +125,9 @@ class UserTest extends TestCase
 	public function testRole()
 	{
 		$user = new User();
+		$role = '["ROLE_ADMIN"]';
+
+		$user->setRole($role);
+		$this->assertEquals($role, $user->getRole());
 	}
 }
