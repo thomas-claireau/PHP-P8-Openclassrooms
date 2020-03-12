@@ -11,25 +11,25 @@ class HomePageTest extends WebTestCase
 	 * 
 	 * @return void
 	 */
-	public function testAccessAddTaskButton()
-	{
-	}
+	// public function testAccessAddTaskButton()
+	// {
+	// }
 
 	/**
 	 * Test access all tasks button
 	 * 
 	 * @return void
 	 */
-	public function testAccessAllTasksButton()
-	{
-	}
+	// public function testAccessAllTasksButton()
+	// {
+	// }
 
 	/**
 	 * Test access all tasks done button
 	 * 
 	 * @return void
 	 */
-	public function testAccessAllTasksDoneButton()
-	{
-	}
+	// public function testAccessAllTasksDoneButton()
+	// {
+	// }
 }

@@ -11,70 +11,70 @@ class TaskTest extends WebTestCase
 	 * 
 	 * @return void
 	 */
-	public function testRedirectCreateTaskButton()
-	{
-	}
+	// public function testRedirectCreateTaskButton()
+	// {
+	// }
 
 	/**
 	 * Test form add task
 	 * 
 	 * @return void
 	 */
-	public function testFormAddTask()
-	{
-	}
+	// public function testFormAddTask()
+	// {
+	// }
 
 	/**
 	 * Test redirect after task added
 	 * 
 	 * @return void
 	 */
-	public function testRedirectAfterTaskAdded()
-	{
-	}
+	// public function testRedirectAfterTaskAdded()
+	// {
+	// }
 
 	/**
 	 * Test back to tasks button
 	 * 
 	 * @return void
 	 */
-	public function testBackToTasksButton()
-	{
-	}
+	// public function testBackToTasksButton()
+	// {
+	// }
 
 	/**
 	 * Test toggle task button
 	 * 
 	 * @return void
 	 */
-	public function testToggleTaskButton()
-	{
-	}
+	// public function testToggleTaskButton()
+	// {
+	// }
 
 	/**
 	 * Test edit task link
 	 * 
 	 * @return void
 	 */
-	public function testEditTaskLink()
-	{
-	}
+	// public function testEditTaskLink()
+	// {
+	// }
 
 	/**
 	 * Test form edit task
 	 * 
 	 * @return void
 	 */
-	public function testFormEditTask()
-	{
-	}
+	// public function testFormEditTask()
+	// {
+	// }
 
 	/**
 	 * Test remove task button
 	 * 
 	 * @return void
 	 */
-	public function testRemoveTaskButton()
-	{
-	}
+	// public function testRemoveTaskButton()
+	// {
+	// }
 }

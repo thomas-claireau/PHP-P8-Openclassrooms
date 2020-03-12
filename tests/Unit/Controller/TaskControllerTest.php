@@ -11,61 +11,61 @@ class TaskControllerTest extends WebTestCase
 	 * 
 	 * @return void
 	 */
-	public function testAccessTaskList()
-	{
-	}
+	// public function testAccessTaskList()
+	// {
+	// }
 
 	/**
 	 * Test create task
 	 * 
 	 * @return void
 	 */
-	public function testCreateTask()
-	{
-	}
+	// public function testCreateTask()
+	// {
+	// }
 
 	/**
 	 * Test update task
 	 * 
 	 * @return void
 	 */
-	public function testUpdateTask()
-	{
-	}
+	// public function testUpdateTask()
+	// {
+	// }
 
 	/**
 	 * Test toggle task
 	 * 
 	 * @return void
 	 */
-	public function testToggleTask()
-	{
-	}
+	// public function testToggleTask()
+	// {
+	// }
 
 	/**
 	 * Test remove task by unauthorized
 	 * 
 	 * @return void
 	 */
-	public function testRemoveTaskByUnauthorized()
-	{
-	}
+	// public function testRemoveTaskByUnauthorized()
+	// {
+	// }
 
 	/**
 	 * Test remove task by authorized
 	 * 
 	 * @return void
 	 */
-	public function testRemoveTaskByAuthorized()
-	{
-	}
+	// public function testRemoveTaskByAuthorized()
+	// {
+	// }
 
 	/**
 	 * Test remove anonymous task by admin
 	 * 
 	 * @return void
 	 */
-	public function testRemoveAnonymousTaskByAdmin()
-	{
-	}
+	// public function testRemoveAnonymousTaskByAdmin()
+	// {
+	// }
 }

@@ -11,16 +11,16 @@ class LoginPageTest extends WebTestCase
 	 * 
 	 * @return void
 	 */
-	public function testSubmitWrongAuthentication()
-	{
-	}
+	// public function testSubmitWrongAuthentication()
+	// {
+	// }
 
 	/**
 	 * Test submit correct authentication
 	 * 
 	 * @return void
 	 */
-	public function testSubmitCorrectAuthentication()
-	{
-	}
+	// public function testSubmitCorrectAuthentication()
+	// {
+	// }
 }

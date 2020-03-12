@@ -11,25 +11,25 @@ class UserControllerTest extends WebTestCase
 	 * 
 	 * @return void
 	 */
-	public function testAccessListUser()
-	{
-	}
+	// public function testAccessListUser()
+	// {
+	// }
 
 	/**
 	 * Test create user
 	 * 
 	 * @return void
 	 */
-	public function testCreateUser()
-	{
-	}
+	// public function testCreateUser()
+	// {
+	// }
 
 	/**
 	 * Test update user
 	 * 
 	 * @return void
 	 */
-	public function testUpdateUser()
-	{
-	}
+	// public function testUpdateUser()
+	// {
+	// }
 }

@@ -11,34 +11,34 @@ class UserTest extends WebTestCase
 	 * 
 	 * @return void
 	 */
-	public function testRedirectEditUserButton()
-	{
-	}
+	// public function testRedirectEditUserButton()
+	// {
+	// }
 
 	/**
 	 * Test form add user
 	 * 
 	 * @return void
 	 */
-	public function testFormAddUser()
-	{
-	}
+	// public function testFormAddUser()
+	// {
+	// }
 
 	/**
 	 * Test form edit user
 	 * 
 	 * @return void
 	 */
-	public function testFormEditUser()
-	{
-	}
+	// public function testFormEditUser()
+	// {
+	// }
 
 	/**
 	 * Test redirect after user update
 	 * 
 	 * @return void
 	 */
-	public function testRedirectAfterUserUpdate()
-	{
-	}
+	// public function testRedirectAfterUserUpdate()
+	// {
+	// }
 }
