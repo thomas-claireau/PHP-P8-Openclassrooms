@@ -9,7 +9,7 @@
 	</div>
 	<div class="row tasks">
 		{% for task in tasks %}
-			<div>
+			<div class="task" data-id="{{ task.id }}">
 				<div class="thumbnail portlet ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
 					<div class="caption">
 						<div class="toggle" data-is-done="{{ task.isDone ? 'true' : 'false' }}">

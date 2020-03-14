@@ -2,18 +2,26 @@
 
 namespace App\Tests\Unit\Controller;
 
-use App\Repository\TaskRepository;
+use App\Entity\Task;
+use App\Entity\User;
 use App\Tests\LogUtils;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TaskControllerTest extends WebTestCase
 {
 	private $client;
+	private $logUtils;
+	private $idCreatedTask;
+	private $entityManager;
 
 	public function setUp(): void
 	{
 		$this->client = static::createClient();
 		$this->logUtils = new LogUtils($this->client);
+
+		$this->entityManager = $this->client->getContainer()
+			->get('doctrine')
+			->getManager();
 	}
 	/**
 	 * Test access tasks list
@@ -62,6 +70,8 @@ class TaskControllerTest extends WebTestCase
 		$dateTask = $crawler->filter('.caption .inner .date')->first()->text();
 		$authorTask = $crawler->filter('.caption .inner .author')->first()->text();
 		$contentTask = $crawler->filter('.caption .inner .content')->first()->text();
+
+		$this->setIdCreatedTask($crawler->filter('.task')->first()->attr('data-id'));
 
 		// check if title task is present
 		$this->assertStringContainsString($title, $titleTask);
@@ -156,7 +166,29 @@ class TaskControllerTest extends WebTestCase
 	 */
 	public function testRemoveTaskByUnauthorized()
 	{
-		$this->logUtils->login("user");
+		$this->testCreateTask();
+		$idCreatedTask = $this->getIdCreatedTask();
+
+		$taskCreated = $this->entityManager
+			->getRepository(Task::class)
+			->findOneBy(['id' => $idCreatedTask]);
+
+		$urlDeleteTask = "/tasks/" . $idCreatedTask . "/delete";
+
+		$this->logUtils->login("user2");
+
+		$crawler = $this->client->request('POST', $urlDeleteTask);
+
+		$this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+
+		$crawler = $this->client->followRedirect();
+		$this->assertStringContainsString('Vous ne pouvez pas supprimer cette tâche', $crawler->text());
+
+		$task = $this->entityManager
+			->getRepository(Task::class)
+			->findOneBy(['id' => $idCreatedTask]);
+
+		$this->assertEquals($taskCreated, $task);
 	}
 
 	/**
@@ -164,16 +196,81 @@ class TaskControllerTest extends WebTestCase
 	 * 
 	 * @return void
 	 */
-	// public function testRemoveTaskByAuthorized()
-	// {
-	// }
+	public function testRemoveTaskByAuthorized()
+	{
+		$this->testCreateTask();
+		$idCreatedTask = $this->getIdCreatedTask();
+
+		$urlDeleteTask = "/tasks/" . $idCreatedTask . "/delete";
+
+		$this->logUtils->login("user");
+
+		$crawler = $this->client->request('POST', $urlDeleteTask);
+
+		$this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+
+		$crawler = $this->client->followRedirect();
+		$this->assertStringContainsString('La tâche a bien été supprimée', $crawler->text());
+
+		$task = $this->entityManager
+			->getRepository(Task::class)
+			->findOneBy(['id' => $idCreatedTask]);
+
+		$this->assertEquals(null, $task);
+	}
 
 	/**
 	 * Test remove anonymous task by admin
 	 * 
 	 * @return void
 	 */
-	// public function testRemoveAnonymousTaskByAdmin()
-	// {
-	// }
+	public function testRemoveAnonymousTaskByAdmin()
+	{
+		$anonymousUser = $this->entityManager
+			->getRepository(User::class)
+			->findOneBy(['id' => "2"]);
+
+		$anonymousTasks = $this->entityManager
+			->getRepository(Task::class)
+			->findBy(['user' => $anonymousUser]);
+
+		$targetTask = $anonymousTasks[random_int(0, count($anonymousTasks) - 1)];
+		$idTargetTask = $targetTask->getId();
+
+		$this->logUtils->login("admin");
+		$urlDeleteTargetTask = "/tasks/" . $idTargetTask . "/delete";
+
+		$crawler = $this->client->request('POST', $urlDeleteTargetTask);
+
+		$this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+
+		$crawler = $this->client->followRedirect();
+		$this->assertStringContainsString('La tâche a bien été supprimée', $crawler->text());
+
+		$task = $this->entityManager
+			->getRepository(Task::class)
+			->findOneBy(['id' => $idTargetTask]);
+
+		$this->assertEquals(null, $task);
+	}
+
+	/**
+	 * Get the value of idCreatedTask
+	 */
+	public function getIdCreatedTask()
+	{
+		return $this->idCreatedTask;
+	}
+
+	/**
+	 * Set the value of idCreatedTask
+	 *
+	 * @return  self
+	 */
+	public function setIdCreatedTask($idCreatedTask)
+	{
+		$this->idCreatedTask = $idCreatedTask;
+
+		return $this;
+	}
 }

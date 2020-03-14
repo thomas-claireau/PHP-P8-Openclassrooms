@@ -15,12 +15,9 @@ class LogUtils
 		$this->client = $client;
 	}
 
-	public function login($isAdmin)
+	public function login($type)
 	{
-		$adminCredentials = ['username' => 'root', 'password' => 'root'];
-		$userCredentials = ['username' => 'user', 'password' => 'user'];
-
-		$credentials = $isAdmin == 'admin' ? $adminCredentials : $userCredentials;
+		$credentials = ['username' => $type, 'password' => $type];
 
 		// get doctrine
 		$entityManager = $this->client->getContainer()

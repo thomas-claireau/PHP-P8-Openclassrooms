@@ -31,10 +31,10 @@ class AppFixtures extends Fixture
 
 		$users = [
 			[
-				"username" => "root",
-				"email" => "root@todo.fr",
+				"username" => "admin",
+				"email" => "admin@todo.fr",
 				"role" => '["ROLE_ADMIN"]',
-				"password" => "root",
+				"password" => "admin",
 			],
 			[
 				"username" => "anonyme",
@@ -47,6 +47,12 @@ class AppFixtures extends Fixture
 				"email" => "user@todo.fr",
 				"role" => '["ROLE_USER"]',
 				"password" => "user",
+			],
+			[
+				"username" => "user2",
+				"email" => "user2@todo.fr",
+				"role" => '["ROLE_USER"]',
+				"password" => "user2",
 			],
 		];
 

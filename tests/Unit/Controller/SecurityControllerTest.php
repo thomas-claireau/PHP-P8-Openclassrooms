@@ -59,7 +59,7 @@ class SecurityControllerTest extends WebTestCase
 	 */
 	public function testWrongCredientialsWhenLogin()
 	{
-		$this->client->request('POST', "/login_check", ['_username' => 'xxx', '_password' => 'xxx']);
+		$this->client->request('POST', "/login_check", ['_username' => 'test', '_password' => 'test']);
 		$crawler = $this->client->followRedirect();
 		$this->assertStringContainsString('Invalid credentials.', $crawler->text());
 	}
@@ -71,7 +71,7 @@ class SecurityControllerTest extends WebTestCase
 	 */
 	public function testLoginWithCorrectParams()
 	{
-		$this->client->request('POST', "/login_check", ['_username' => 'root', '_password' => 'root']);
+		$this->client->request('POST', "/login_check", ['_username' => 'admin', '_password' => 'admin']);
 		$crawler = $this->client->followRedirect();
 		$this->assertStringContainsString('Créer une nouvelle tâche', $crawler->text());
 	}
