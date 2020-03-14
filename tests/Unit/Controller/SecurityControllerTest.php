@@ -11,14 +11,6 @@ class SecurityControllerTest extends WebTestCase
 {
 	private $client;
 
-	const ROUTE_LOGIN = "/login";
-	const ROUTE_LOGOUT = "/logout";
-	const ROUTE_CHECK_LOGIN = "/login_check";
-	const ROUTE_TASK = "/tasks";
-	const ROUTE_USER = "/users";
-	const ADMIN = ['username' => 'root', 'password' => 'root'];
-	const USER = ['username' => 'user', 'password' => 'user'];
-
 	public function setUp(): void
 	{
 		$this->client = static::createClient();
@@ -31,7 +23,7 @@ class SecurityControllerTest extends WebTestCase
 	 */
 	public function testAccessRouteWhenUnauthenticated()
 	{
-		$this->client->request('GET', self::ROUTE_TASK);
+		$this->client->request('GET', "/tasks");
 		$this->assertEquals('302', $this->client->getResponse()->getStatusCode());
 	}
 
@@ -43,7 +35,7 @@ class SecurityControllerTest extends WebTestCase
 	public function testAccessRouteWhenAuthenticatedWithAdminRole()
 	{
 		$this->logIn('admin');
-		$this->client->request('GET', self::ROUTE_TASK);
+		$this->client->request('GET', "/tasks");
 		$this->assertEquals('200', $this->client->getResponse()->getStatusCode());
 	}
 
@@ -55,7 +47,7 @@ class SecurityControllerTest extends WebTestCase
 	public function testAccessRouteWhenAuthenticatedWithUserRole()
 	{
 		$this->logIn('user');
-		$this->client->request('GET', self::ROUTE_TASK);
+		$this->client->request('GET', "/tasks");
 		$this->assertEquals('200', $this->client->getResponse()->getStatusCode());
 	}
 
@@ -66,7 +58,7 @@ class SecurityControllerTest extends WebTestCase
 	 */
 	public function testWrongCredientialsWhenLogin()
 	{
-		$this->client->request('POST', self::ROUTE_CHECK_LOGIN, ['_username' => 'xxx', '_password' => 'xxx']);
+		$this->client->request('POST', "/login_check", ['_username' => 'xxx', '_password' => 'xxx']);
 		$crawler = $this->client->followRedirect();
 		$this->assertStringContainsString('Invalid credentials.', $crawler->text());
 	}
@@ -78,7 +70,7 @@ class SecurityControllerTest extends WebTestCase
 	 */
 	public function testLoginWithCorrectParams()
 	{
-		$this->client->request('POST', self::ROUTE_CHECK_LOGIN, ['_username' => 'root', '_password' => 'root']);
+		$this->client->request('POST', "/login_check", ['_username' => 'root', '_password' => 'root']);
 		$crawler = $this->client->followRedirect();
 		$this->assertStringContainsString('Créer une nouvelle tâche', $crawler->text());
 	}
@@ -91,7 +83,7 @@ class SecurityControllerTest extends WebTestCase
 	public function testAccessUserManagementWithUserRole()
 	{
 		$this->logIn('user');
-		$this->client->request('GET', self::ROUTE_USER);
+		$this->client->request('GET', "/users");
 		$this->assertEquals('302', $this->client->getResponse()->getStatusCode());
 	}
 
@@ -103,7 +95,7 @@ class SecurityControllerTest extends WebTestCase
 	public function testAccessUserManagementWithAdminRole()
 	{
 		$this->logIn('admin');
-		$this->client->request('GET', self::ROUTE_USER);
+		$this->client->request('GET', "/users");
 		$this->assertEquals('200', $this->client->getResponse()->getStatusCode());
 	}
 
@@ -115,14 +107,17 @@ class SecurityControllerTest extends WebTestCase
 	public function testLogout()
 	{
 		$this->logIn('admin');
-		$this->client->request('GET', self::ROUTE_LOGOUT);
-		$this->client->request('GET', self::ROUTE_TASK);
+		$this->client->request('GET', "/logout");
+		$this->client->request('GET', "/tasks");
 		$this->assertEquals('302', $this->client->getResponse()->getStatusCode());
 	}
 
 	public function logIn($isAdmin)
 	{
-		$credentials = $isAdmin == 'admin' ? self::ADMIN : self::USER;
+		$adminCredentials = ['username' => 'root', 'password' => 'root'];
+		$userCredentials = ['username' => 'user', 'password' => 'user'];
+
+		$credentials = $isAdmin == 'admin' ? $adminCredentials : $userCredentials;
 
 		// get doctrine
 		$entityManager = $this->client->getContainer()

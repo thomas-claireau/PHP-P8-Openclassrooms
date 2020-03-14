@@ -3,7 +3,6 @@
 namespace App\Tests\Unit\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpClient\HttpClient;
 
 class DefaultControllerTest extends WebTestCase
 {
