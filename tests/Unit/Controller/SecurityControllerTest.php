@@ -2,18 +2,19 @@
 
 namespace App\Tests\Unit\Controller;
 
-use App\Entity\User;
+use App\Tests\LogUtils;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\BrowserKit\Cookie;
+
 
 class SecurityControllerTest extends WebTestCase
 {
 	private $client;
+	private $logUtils;
 
 	public function setUp(): void
 	{
 		$this->client = static::createClient();
+		$this->logUtils = new LogUtils($this->client);
 	}
 
 	/**
@@ -34,7 +35,7 @@ class SecurityControllerTest extends WebTestCase
 	 */
 	public function testAccessRouteWhenAuthenticatedWithAdminRole()
 	{
-		$this->logIn('admin');
+		$this->logUtils->login('admin');
 		$this->client->request('GET', "/tasks");
 		$this->assertEquals('200', $this->client->getResponse()->getStatusCode());
 	}
@@ -46,7 +47,7 @@ class SecurityControllerTest extends WebTestCase
 	 */
 	public function testAccessRouteWhenAuthenticatedWithUserRole()
 	{
-		$this->logIn('user');
+		$this->logUtils->login('user');
 		$this->client->request('GET', "/tasks");
 		$this->assertEquals('200', $this->client->getResponse()->getStatusCode());
 	}
@@ -82,7 +83,7 @@ class SecurityControllerTest extends WebTestCase
 	 */
 	public function testAccessUserManagementWithUserRole()
 	{
-		$this->logIn('user');
+		$this->logUtils->login('user');
 		$this->client->request('GET', "/users");
 		$this->assertEquals('302', $this->client->getResponse()->getStatusCode());
 	}
@@ -94,7 +95,7 @@ class SecurityControllerTest extends WebTestCase
 	 */
 	public function testAccessUserManagementWithAdminRole()
 	{
-		$this->logIn('admin');
+		$this->logUtils->login('admin');
 		$this->client->request('GET', "/users");
 		$this->assertEquals('200', $this->client->getResponse()->getStatusCode());
 	}
@@ -106,41 +107,9 @@ class SecurityControllerTest extends WebTestCase
 	 */
 	public function testLogout()
 	{
-		$this->logIn('admin');
+		$this->logUtils->login('admin');
 		$this->client->request('GET', "/logout");
 		$this->client->request('GET', "/tasks");
 		$this->assertEquals('302', $this->client->getResponse()->getStatusCode());
-	}
-
-	public function logIn($isAdmin)
-	{
-		$adminCredentials = ['username' => 'root', 'password' => 'root'];
-		$userCredentials = ['username' => 'user', 'password' => 'user'];
-
-		$credentials = $isAdmin == 'admin' ? $adminCredentials : $userCredentials;
-
-		// get doctrine
-		$entityManager = $this->client->getContainer()
-			->get('doctrine')
-			->getManager();
-
-		// get a user from database
-		$user = $entityManager
-			->getRepository(User::class)
-			->findOneBy([
-				'username' => $credentials['username']
-			]);
-
-
-		$session = $this->client->getContainer()->get('session');
-
-		$firewall = 'main';
-		$token = new UsernamePasswordToken($user, $credentials['password'], $firewall, $user->getRoles());
-
-		$session->set('_security_' . $firewall, serialize($token));
-		$session->save();
-
-		$cookie = new Cookie($session->getName(), $session->getId());
-		$this->client->getCookieJar()->set($cookie);
 	}
 }
