@@ -5,23 +5,30 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
 	private $security;
 
 	/**
+	 * @var UserPasswordEncoderInterface
+	 */
+	private $encoder;
+
+	/**
 	 * @var User|null
 	 */
 	private $actualUser;
 
-	public function __construct(Security $security)
+	public function __construct(Security $security, UserPasswordEncoderInterface $userPasswordEncoderInterface)
 	{
 		$this->security = $security;
+		$this->encoder = $userPasswordEncoderInterface;
 		$this->actualUser = $this->security->getUser();
 	}
 	/**
@@ -54,7 +61,7 @@ class UserController extends AbstractController
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-			$password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
+			$password = $this->encoder->encodePassword($user, $user->getPassword());
 			$user->setPassword($password);
 
 			$em->persist($user);
@@ -83,7 +90,7 @@ class UserController extends AbstractController
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			$password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
+			$password = $this->encoder->encodePassword($user, $user->getPassword());
 			$user->setPassword($password);
 
 			$this->getDoctrine()->getManager()->flush();
