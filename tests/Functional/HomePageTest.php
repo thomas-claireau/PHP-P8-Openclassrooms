@@ -23,7 +23,7 @@ class HomePageTest extends WebTestCase
 	 */
 	public function testAccessAddTaskButton()
 	{
-		$this->logUtils->login('user');
+		$this->logUtils->login('admin');
 		$crawler = $this->client->request('GET', '/');
 		$linkAddTask = $crawler->selectLink("Créer une nouvelle tâche")->link()->getUri();
 		$crawler = $this->client->request('GET', $linkAddTask);
@@ -41,7 +41,7 @@ class HomePageTest extends WebTestCase
 	 */
 	public function testAccessAllTasksButton()
 	{
-		$this->logUtils->login('user');
+		$this->logUtils->login('admin');
 		$crawler = $this->client->request('GET', '/');
 		$linkViewTasks = $crawler->selectLink("Consulter la liste des tâches à faire")->link()->getUri();
 
@@ -60,7 +60,7 @@ class HomePageTest extends WebTestCase
 	 */
 	public function testAccessAllTasksDoneButton()
 	{
-		$this->logUtils->login('user');
+		$this->logUtils->login('admin');
 		$crawler = $this->client->request('GET', '/');
 		$linkViewDoneTasks = $crawler->selectLink("Consulter la liste des tâches terminées")->link()->getUri();
 

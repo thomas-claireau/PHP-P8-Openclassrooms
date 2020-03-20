@@ -56,23 +56,10 @@ class UserControllerTest extends WebTestCase
 	{
 		$this->logUtils->login('admin');
 
-		$randomNumber = random_int(0, 100);
-		$username = 'Test username ' . $randomNumber;
-		$password = "Test password " . $randomNumber;
-		$email = 'test' . $randomNumber . '@test.fr';
+		$username = 'Test create user';
+		$password = "Test create user";
+		$email = 'test-create-user@test.fr';
 		$role = '["ROLE_USER"]';
-
-		$checkUserByEmail = $this->entityManager
-			->getRepository(User::class)
-			->findOneBy(['email' => $email]);
-
-		$checkUserByUsername = $this->entityManager
-			->getRepository(User::class)
-			->findOneBy(['username' => $username]);
-
-		while ($checkUserByEmail !== null || $checkUserByUsername !== null) {
-			$this->testCreateUser();
-		}
 
 		$this->logUtils->login("admin");
 		$crawler = $this->client->request('GET', "/users/create");
@@ -118,7 +105,7 @@ class UserControllerTest extends WebTestCase
 		$users = [];
 
 		foreach ($allUsers as $user) {
-			if ($user->getUsername() !== "admin" && $user->getUsername() !== "anonyme") {
+			if ($user->getUsername() !== "admin" && $user->getUsername() !== "anonyme" && $user->getUsername() !== "user" && $user->getUsername() !== "user2") {
 				array_push($users, $user);
 			}
 		}

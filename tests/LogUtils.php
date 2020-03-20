@@ -31,7 +31,6 @@ class LogUtils
 				'username' => $credentials['username']
 			]);
 
-
 		$session = $this->client->getContainer()->get('session');
 
 		$firewall = 'main';

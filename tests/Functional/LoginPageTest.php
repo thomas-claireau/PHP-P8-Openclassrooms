@@ -8,12 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class LoginPageTest extends WebTestCase
 {
 	private $client;
-	private $logUtils;
 
 	public function setUp(): void
 	{
 		$this->client = static::createClient();
-		$this->logUtils = new LogUtils($this->client);
 	}
 
 	/**
