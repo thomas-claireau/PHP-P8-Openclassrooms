@@ -1,7 +1,6 @@
 # Files ignored
 composer.lock
 package-lock.json
-phpunit.xml.dist
 symfony.lock
 config/bundles.php
 public/build/
@@ -155,7 +154,6 @@ temp/
 
 # PHPUnit
 /app/phpunit.xml
-/phpunit.xml
 
 # Build data
 /build/
@@ -198,7 +196,6 @@ yarn-error.log
 ###> symfony/phpunit-bridge ###
 .phpunit
 .phpunit.result.cache
-/phpunit.xml
 ###< symfony/phpunit-bridge ###
 
 ###> symfony/web-server-bundle ###
