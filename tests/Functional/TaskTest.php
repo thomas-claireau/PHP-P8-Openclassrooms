@@ -6,6 +6,12 @@ use App\Entity\Task;
 use App\Tests\LogUtils;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @covers \App\Controller\DefaultController
+ * @covers \App\Controller\TaskController
+ * @covers \App\Entity\User
+ * @covers \App\Entity\Task
+ */
 class TaskTest extends WebTestCase
 {
 	private $client;

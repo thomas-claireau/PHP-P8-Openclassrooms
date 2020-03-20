@@ -5,6 +5,11 @@ namespace App\Tests\Functional;
 use App\Tests\LogUtils;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @covers \App\Controller\DefaultController
+ * @covers \App\Controller\UserController
+ * @covers \App\Entity\User
+ */
 class UserTest extends WebTestCase
 {
 	private $client;

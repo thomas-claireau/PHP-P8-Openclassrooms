@@ -6,6 +6,14 @@ use App\Tests\LogUtils;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @covers \App\Controller\DefaultController
+ * @covers \App\Controller\UserController
+ * @covers \App\Controller\TaskController
+ * @covers \App\Controller\SecurityController
+ * @covers \App\Entity\User
+ * @covers \App\Entity\Task
+ */
 class NavbarTest extends WebTestCase
 {
 	private $client;
