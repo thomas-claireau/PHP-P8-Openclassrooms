@@ -5,30 +5,42 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserController extends Controller
+class UserController extends AbstractController
 {
 	private $security;
+
+	/**
+	 * @var UserPasswordEncoderInterface
+	 */
+	private $encoder;
 
 	/**
 	 * @var User|null
 	 */
 	private $actualUser;
 
-	public function __construct(Security $security)
+	public function __construct(Security $security, UserPasswordEncoderInterface $userPasswordEncoderInterface)
 	{
 		$this->security = $security;
+		$this->encoder = $userPasswordEncoderInterface;
 		$this->actualUser = $this->security->getUser();
 	}
+
 	/**
 	 * @Route("/users", name="user_list")
 	 */
 	public function listAction(UserRepository $userRepository)
 	{
+		if ($this->actualUser == null) {
+			return $this->redirectToRoute('login');
+		}
+
 		if ($this->actualUser->getRole() !== '["ROLE_ADMIN"]') {
 			$this->addFlash('error', 'Vous ne pouvez pas accéder à cette partie du site');
 			return $this->redirectToRoute('homepage');
@@ -42,6 +54,10 @@ class UserController extends Controller
 	 */
 	public function createAction(Request $request)
 	{
+		if ($this->actualUser == null) {
+			return $this->redirectToRoute('login');
+		}
+
 		if ($this->actualUser->getRole() !== '["ROLE_ADMIN"]') {
 			$this->addFlash('error', 'Vous ne pouvez pas accéder à cette partie du site');
 			return $this->redirectToRoute('homepage');
@@ -54,7 +70,7 @@ class UserController extends Controller
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-			$password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
+			$password = $this->encoder->encodePassword($user, $user->getPassword());
 			$user->setPassword($password);
 
 			$em->persist($user);
@@ -73,6 +89,10 @@ class UserController extends Controller
 	 */
 	public function editAction(User $user, Request $request)
 	{
+		if ($this->actualUser == null) {
+			return $this->redirectToRoute('login');
+		}
+
 		if ($this->actualUser->getRole() !== '["ROLE_ADMIN"]') {
 			$this->addFlash('error', 'Vous ne pouvez pas accéder à cette partie du site');
 			return $this->redirectToRoute('homepage');
@@ -83,7 +103,7 @@ class UserController extends Controller
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			$password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
+			$password = $this->encoder->encodePassword($user, $user->getPassword());
 			$user->setPassword($password);
 
 			$this->getDoctrine()->getManager()->flush();

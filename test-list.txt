@@ -1,0 +1,12 @@
+Tester les liens du menu
+Tester l'authentification
+Tester l'ajout d'une tâche
+Tester la modification d'une tâche
+Tester la suppression d'une tâche 
+Test suppression des tâches qu'on a créées
+Tester la suppression des tâches anonymes (seulement admin)
+Tester le toggle fini / pas fini d'une tâche
+Tester l'accès aux utilisateurs (seulement admin)
+Tester l'ajout d'un utilisateur
+Tester la modification d'un utilisateur
+Tester la suppression d'un utilisateur
