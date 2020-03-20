@@ -31,11 +31,16 @@ class UserController extends AbstractController
 		$this->encoder = $userPasswordEncoderInterface;
 		$this->actualUser = $this->security->getUser();
 	}
+
 	/**
 	 * @Route("/users", name="user_list")
 	 */
 	public function listAction(UserRepository $userRepository)
 	{
+		if ($this->actualUser == null) {
+			return $this->redirectToRoute('login');
+		}
+
 		if ($this->actualUser->getRole() !== '["ROLE_ADMIN"]') {
 			$this->addFlash('error', 'Vous ne pouvez pas accéder à cette partie du site');
 			return $this->redirectToRoute('homepage');
@@ -49,6 +54,10 @@ class UserController extends AbstractController
 	 */
 	public function createAction(Request $request)
 	{
+		if ($this->actualUser == null) {
+			return $this->redirectToRoute('login');
+		}
+
 		if ($this->actualUser->getRole() !== '["ROLE_ADMIN"]') {
 			$this->addFlash('error', 'Vous ne pouvez pas accéder à cette partie du site');
 			return $this->redirectToRoute('homepage');
@@ -80,6 +89,10 @@ class UserController extends AbstractController
 	 */
 	public function editAction(User $user, Request $request)
 	{
+		if ($this->actualUser == null) {
+			return $this->redirectToRoute('login');
+		}
+
 		if ($this->actualUser->getRole() !== '["ROLE_ADMIN"]') {
 			$this->addFlash('error', 'Vous ne pouvez pas accéder à cette partie du site');
 			return $this->redirectToRoute('homepage');
