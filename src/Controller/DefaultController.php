@@ -15,17 +15,4 @@ class DefaultController extends AbstractController
 	{
 		return $this->render('default/index.html.twig');
 	}
-
-	/**
-	 * @Route("/phpinfo", name="phpinfo")
-	 */
-	public function phpinfo()
-	{
-		ob_start();
-		phpinfo();
-		$str = ob_get_contents();
-		ob_get_clean();
-
-		return new Response($str);
-	}
 }
