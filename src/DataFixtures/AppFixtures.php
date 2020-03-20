@@ -54,6 +54,12 @@ class AppFixtures extends Fixture
 				"role" => '["ROLE_USER"]',
 				"password" => "user2",
 			],
+			[
+				"username" => "user3",
+				"email" => "user3@todo.fr",
+				"role" => '["ROLE_USER"]',
+				"password" => "user3",
+			],
 		];
 
 		$usersObj = [];
