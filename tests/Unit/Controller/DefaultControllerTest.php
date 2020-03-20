@@ -4,6 +4,10 @@ namespace App\Tests\Unit\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @covers \App\Controller\DefaultController
+ * @covers \App\Controller\SecurityController
+ */
 class DefaultControllerTest extends WebTestCase
 {
 	private $client = null;

@@ -6,6 +6,10 @@ use App\Entity\User;
 use App\Entity\Task;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @covers \App\Entity\User
+ * @covers \App\Entity\Task
+ */
 class UserTest extends WebTestCase
 {
 	private $encoder;

@@ -6,7 +6,10 @@ use App\Entity\Task;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
-
+/**
+ * @covers \App\Entity\Task
+ * @covers \App\Entity\User
+ */
 class TaskTest extends TestCase
 {
 	/**

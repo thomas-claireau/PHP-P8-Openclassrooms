@@ -5,7 +5,14 @@ namespace App\Tests\Unit\Controller;
 use App\Tests\LogUtils;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-
+/**
+ * @covers \App\Controller\DefaultController
+ * @covers \App\Controller\SecurityController
+ * @covers \App\Controller\UserController
+ * @covers \App\Controller\TaskController
+ * @covers \App\Entity\User
+ * @covers \App\Entity\Task
+ */
 class SecurityControllerTest extends WebTestCase
 {
 	private $client;
