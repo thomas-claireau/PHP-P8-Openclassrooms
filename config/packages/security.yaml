@@ -41,11 +41,10 @@ security:
             anonymous: ~
             pattern: ^/
             form_login:
-                login_path: login
-                check_path: login_check
-                always_use_default_target_path: true
-                default_target_path: /
-            logout: ~
+                check_path: login
+            logout:
+                path: logout
+                target: homepage
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
