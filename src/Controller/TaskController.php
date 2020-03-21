@@ -6,10 +6,12 @@ use App\Entity\Task;
 use App\Entity\User;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
+use App\Security\Voter\TaskVoter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class TaskController extends AbstractController
 {
@@ -20,10 +22,16 @@ class TaskController extends AbstractController
 	 */
 	private $actualUser;
 
-	public function __construct(Security $security)
+	/**
+	 * @var AuthorizationCheckerInterface
+	 */
+	private $authorization;
+
+	public function __construct(Security $security, AuthorizationCheckerInterface $authorizationCheckerInterface)
 	{
 		$this->security = $security;
 		$this->actualUser = $this->security->getUser();
+		$this->authorization = $authorizationCheckerInterface;
 	}
 	/**
 	 * @Route("/tasks", name="task_list")
@@ -125,9 +133,7 @@ class TaskController extends AbstractController
 	 */
 	public function deleteTaskAction(Task $task)
 	{
-		$user = $task->getUser();
-
-		if ($user !== $this->actualUser && $this->actualUser->getRole() !== '["ROLE_ADMIN"]') {
+		if (!$this->authorization->isGranted(TaskVoter::DELETE, $task)) {
 			$this->addFlash('error', 'Vous ne pouvez pas supprimer cette tâche');
 			return $this->redirectToRoute('task_list');
 		}

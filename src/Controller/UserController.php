@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Security\Voter\UserVoter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class UserController extends AbstractController
 {
@@ -25,11 +27,17 @@ class UserController extends AbstractController
 	 */
 	private $actualUser;
 
-	public function __construct(Security $security, UserPasswordEncoderInterface $userPasswordEncoderInterface)
+	/**
+	 * @var AuthorizationCheckerInterface
+	 */
+	private $authorization;
+
+	public function __construct(Security $security, UserPasswordEncoderInterface $userPasswordEncoderInterface, AuthorizationCheckerInterface $authorizationCheckerInterface)
 	{
 		$this->security = $security;
 		$this->encoder = $userPasswordEncoderInterface;
 		$this->actualUser = $this->security->getUser();
+		$this->authorization = $authorizationCheckerInterface;
 	}
 
 	/**
@@ -41,7 +49,7 @@ class UserController extends AbstractController
 			return $this->redirectToRoute('login');
 		}
 
-		if ($this->actualUser->getRole() !== '["ROLE_ADMIN"]') {
+		if (!$this->authorization->isGranted(UserVoter::VIEW, $this->getUser())) {
 			$this->addFlash('error', 'Vous ne pouvez pas accéder à cette partie du site');
 			return $this->redirectToRoute('homepage');
 		}
@@ -58,7 +66,7 @@ class UserController extends AbstractController
 			return $this->redirectToRoute('login');
 		}
 
-		if ($this->actualUser->getRole() !== '["ROLE_ADMIN"]') {
+		if (!$this->authorization->isGranted(UserVoter::CREATE, $this->getUser())) {
 			$this->addFlash('error', 'Vous ne pouvez pas accéder à cette partie du site');
 			return $this->redirectToRoute('homepage');
 		}
@@ -93,7 +101,7 @@ class UserController extends AbstractController
 			return $this->redirectToRoute('login');
 		}
 
-		if ($this->actualUser->getRole() !== '["ROLE_ADMIN"]') {
+		if (!$this->authorization->isGranted(UserVoter::UPDATE, $this->getUser())) {
 			$this->addFlash('error', 'Vous ne pouvez pas accéder à cette partie du site');
 			return $this->redirectToRoute('homepage');
 		}
