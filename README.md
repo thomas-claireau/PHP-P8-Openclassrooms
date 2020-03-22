@@ -84,3 +84,11 @@ You can also use the following account, provided you have launched the fixtures:
 -   password: admin
 
 More information is available on authentication [in the documentation](https://github.com/thomas-claireau/PHP-P8-Openclassrooms/wiki/Documentation).
+
+### Run Tests
+
+Run phpunit tests by following command :
+
+```
+~ php bin/console doctrine:fixtures:load && php bin/phpunit
+```
