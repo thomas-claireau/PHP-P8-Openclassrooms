@@ -14,7 +14,6 @@
 		<ini name="error_reporting" value="-1" />
 		<server name="KERNEL_CLASS" value="App\Kernel" />
 		<server name="DATABASE_URL" value="mysql://clth9110:Ny8f)s+>YEnn@thomas-claireau.fr/clth9110_todo?serverVersion=5.7" />
-		<env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
 	</php>
 	<filter>
 		<whitelist>
