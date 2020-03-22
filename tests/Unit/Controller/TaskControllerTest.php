@@ -150,16 +150,19 @@ class TaskControllerTest extends WebTestCase
 	 */
 	public function testToggleTask()
 	{
-		$this->logUtils->login("user");
-		$crawler = $this->client->request('GET', '/tasks');
+		$this->logUtils->login("admin");
 
-		$taskIsDoneBefore = filter_var($crawler->filter('.caption div.toggle')->first()->attr('data-is-done'), FILTER_VALIDATE_BOOLEAN);
-		$formToggle = $crawler->selectButton("Marquer comme")->form();
+		$task = $this->entityManager
+			->getRepository(Task::class)
+			->findOneBy([], ['id' => 'DESC']);
 
-		$this->client->submit($formToggle);
+		$urlToggle = '/tasks/' . $task->getId() . '/toggle';
+		$taskIsDoneBefore = $task->isDone();
 
-		$crawler = $this->client->followRedirect();
-		$taskIsDoneAfter = filter_var($crawler->filter('.caption div.toggle')->first()->attr('data-is-done'), FILTER_VALIDATE_BOOLEAN);
+		$this->client->request('POST', $urlToggle);
+		$this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+
+		$taskIsDoneAfter = $task->isDone();
 
 		$this->assertNotEquals($taskIsDoneBefore, $taskIsDoneAfter);
 	}

@@ -137,13 +137,26 @@ class TaskTest extends WebTestCase
 		$this->logUtils->login("admin");
 		$crawler = $this->client->request('GET', '/tasks');
 
-		$taskIsDoneBefore = filter_var($crawler->filter('.caption div.toggle')->first()->attr('data-is-done'), FILTER_VALIDATE_BOOLEAN);
-		$formToggle = $crawler->selectButton("Marquer comme")->form();
+		$task = $this->entityManager
+			->getRepository(Task::class)
+			->findOneBy([], ['id' => 'DESC']);
 
+		$taskId = $task->getId();
+
+		$taskInPage = $crawler->filter('.task[data-id=' . $taskId . ']');
+
+		$taskIsDoneBefore = filter_var($taskInPage->filter('.caption div.toggle')->attr('data-is-done'), FILTER_VALIDATE_BOOLEAN);
+
+		$formToggle = $taskInPage->selectButton("Marquer")->form();
 		$this->client->submit($formToggle);
 
+		$this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+
 		$crawler = $this->client->followRedirect();
-		$taskIsDoneAfter = filter_var($crawler->filter('.caption div.toggle')->first()->attr('data-is-done'), FILTER_VALIDATE_BOOLEAN);
+
+		$taskInPage = $crawler->filter('.task[data-id=' . $taskId . ']');
+
+		$taskIsDoneAfter = filter_var($taskInPage->filter('.caption div.toggle')->attr('data-is-done'), FILTER_VALIDATE_BOOLEAN);
 
 		$this->assertNotEquals($taskIsDoneBefore, $taskIsDoneAfter);
 	}
