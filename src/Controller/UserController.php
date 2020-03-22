@@ -10,11 +10,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class UserController extends AbstractController
 {
+	/**
+	 * @var Security
+	 */
 	private $security;
 
 	/**
@@ -42,8 +46,12 @@ class UserController extends AbstractController
 
 	/**
 	 * @Route("/users", name="user_list")
+	 * 
+	 * Method - listAction
+	 * @param UserRepository - $userRepository
+	 * @return Symfony\Component\HttpFoundation\Response
 	 */
-	public function listAction(UserRepository $userRepository)
+	public function listAction(UserRepository $userRepository): Response
 	{
 		if ($this->actualUser == null) {
 			return $this->redirectToRoute('login');
@@ -59,8 +67,12 @@ class UserController extends AbstractController
 
 	/**
 	 * @Route("/users/create", name="user_create")
+	 * 
+	 * Method - createAction
+	 * @param Request - $request
+	 * @return Symfony\Component\HttpFoundation\Response
 	 */
-	public function createAction(Request $request)
+	public function createAction(Request $request): Response
 	{
 		if ($this->actualUser == null) {
 			return $this->redirectToRoute('login');
@@ -94,8 +106,13 @@ class UserController extends AbstractController
 
 	/**
 	 * @Route("/users/{id}/edit", name="user_edit")
+	 * 
+	 * Method - editAction
+	 * @param User - $user
+	 * @param Request - $request
+	 * @return Symfony\Component\HttpFoundation\Response
 	 */
-	public function editAction(User $user, Request $request)
+	public function editAction(User $user, Request $request): Response
 	{
 		if ($this->actualUser == null) {
 			return $this->redirectToRoute('login');
