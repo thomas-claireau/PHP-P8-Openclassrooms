@@ -62,15 +62,7 @@ DATABASE_URL=mysql://'DB_USER':'DB_PASS'@DB_HOST/DB_NAME?serverVersion=5.7
 DATABASE_URL=mysql://'DB_USER':'DB_PASS'@DB_HOST/DB_NAME?serverVersion=5.7
 ```
 
-Don't forget to configure your test database (in phpunit.xml) :
-
-```xml
- <!-- phpunit.xml or phpunit.dist.xml -->
-
-<server name="DATABASE_URL" value="mysql://DB_USER:DB_PASS@DB_HOST/DB_NAME?serverVersion=5.7" />
-```
-
-Don't forget too to modify your passphrase, to secure your application:
+Don't forget to modify your passphrase, to secure your application:
 
 ```text
 # .env
