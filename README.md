@@ -87,6 +87,14 @@ More information is available on authentication [in the documentation](https://g
 
 ### Run Tests
 
+Don't forget to configure your test database (in phpunit.xml) :
+
+```xml
+ <!-- phpunit.xml or phpunit.dist.xml -->
+
+<server name="DATABASE_URL" value="mysql://root:@127.0.0.1/todo?serverVersion=5.7" />
+```
+
 Run phpunit tests by following command :
 
 ```
