@@ -39,19 +39,25 @@ For this, you must have NodeJs on your machine. To install it, [follow this link
 Write this at the root of the project:
 
 ```text
-~ npm install
+~ npm install && npm run build
 ```
 
 ### Notes
 
 #### Access database
 
-The project is delivered without a database. This means that you must add your configuration, in the `.env` file, in the`DATABASE_URL` part.
+The project is delivered without a database. This means that you must add your configuration, in the `.env` and `.env.test` files, in the`DATABASE_URL` part.
 
 Follow the following code:
 
 ```text
 # .env
+
+DATABASE_URL=mysql://'DB_USER':'DB_PASS'@DB_HOST/DB_NAME?serverVersion=5.7
+```
+
+```text
+# .env.test - I advise you to use another database
 
 DATABASE_URL=mysql://'DB_USER':'DB_PASS'@DB_HOST/DB_NAME?serverVersion=5.7
 ```
