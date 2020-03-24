@@ -46,7 +46,15 @@ Follow the following code:
 DATABASE_URL=mysql://'DB_USER':'DB_PASS'@DB_HOST/DB_NAME?serverVersion=5.7
 ```
 
-Don't forget to modify your passphrase, to secure your application:
+Don't forget to configure your test database (in phpunit.xml) :
+
+```xml
+ <!-- phpunit.xml or phpunit.dist.xml -->
+
+<server name="DATABASE_URL" value="mysql://DB_USER:DB_PASS@DB_HOST/DB_NAME?serverVersion=5.7" />
+```
+
+Don't forget too to modify your passphrase, to secure your application:
 
 ```text
 # .env
@@ -87,14 +95,6 @@ You can also use the following account, provided you have launched the fixtures:
 More information is available on authentication [in the documentation](https://github.com/thomas-claireau/PHP-P8-Openclassrooms/wiki/Documentation).
 
 ### Run Tests
-
-Don't forget to configure your test database (in phpunit.xml) :
-
-```xml
- <!-- phpunit.xml or phpunit.dist.xml -->
-
-<server name="DATABASE_URL" value="mysql://root:@127.0.0.1/todo?serverVersion=5.7" />
-```
 
 Run phpunit tests by following command :
 
