@@ -7,6 +7,7 @@ public/build/
 tests/bootstrap.php
 phpunit.xml
 phpunit.xml.dist
+P8_claireau_thomas
 
 # Created by https://www.gitignore.io/api/node,symfony
 # Edit at https://www.gitignore.io/?templates=node,symfony
