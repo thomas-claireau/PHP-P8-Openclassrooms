@@ -5,6 +5,7 @@ symfony.lock
 config/bundles.php
 public/build/
 tests/bootstrap.php
+phpunit.xml
 phpunit.xml.dist
 
 # Created by https://www.gitignore.io/api/node,symfony
