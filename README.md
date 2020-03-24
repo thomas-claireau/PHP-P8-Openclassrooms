@@ -9,6 +9,7 @@ The project is hosted [online](http://todoandco.thomas-claireau.fr/).
 
 ```text
 ~ git clone https://github.com/thomas-claireau/PHP-P8-Openclassrooms.git
+~ cd PHP-P8-Openclassrooms
 ```
 
 The project runs on Symfony 4.2, so it is necessary that you have Composer installed on your machine.
@@ -21,6 +22,16 @@ Once downloaded, write this at the root of the project:
 ~ composer install
 ```
 
+If asked, choose "Yes for all packages" :
+
+```text
+Do you want to execute this recipe?
+[y] Yes
+[n] No
+[a] Yes for all packages, only for the current installation session
+[p] Yes permanently, never ask again for this project
+```
+
 Then install the front dependencies of the project.
 
 For this, you must have NodeJs on your machine. To install it, [follow this link](https://nodejs.org/en/download/).
@@ -28,19 +39,25 @@ For this, you must have NodeJs on your machine. To install it, [follow this link
 Write this at the root of the project:
 
 ```text
-~ npm install
+~ npm install && npm run build
 ```
 
 ### Notes
 
 #### Access database
 
-The project is delivered without a database. This means that you must add your configuration, in the `.env` file, in the`DATABASE_URL` part.
+The project is delivered without a database. This means that you must add your configuration, in the `.env` and `.env.test` files, in the`DATABASE_URL` part.
 
 Follow the following code:
 
 ```text
 # .env
+
+DATABASE_URL=mysql://'DB_USER':'DB_PASS'@DB_HOST/DB_NAME?serverVersion=5.7
+```
+
+```text
+# .env.test - I advise you to use another database
 
 DATABASE_URL=mysql://'DB_USER':'DB_PASS'@DB_HOST/DB_NAME?serverVersion=5.7
 ```
@@ -86,14 +103,6 @@ You can also use the following account, provided you have launched the fixtures:
 More information is available on authentication [in the documentation](https://github.com/thomas-claireau/PHP-P8-Openclassrooms/wiki/Documentation).
 
 ### Run Tests
-
-Don't forget to configure your test database (in phpunit.xml) :
-
-```xml
- <!-- phpunit.xml or phpunit.dist.xml -->
-
-<server name="DATABASE_URL" value="mysql://root:@127.0.0.1/todo?serverVersion=5.7" />
-```
 
 Run phpunit tests by following command :
 
