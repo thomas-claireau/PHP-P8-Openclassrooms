@@ -9,6 +9,7 @@ The project is hosted [online](http://todoandco.thomas-claireau.fr/).
 
 ```text
 ~ git clone https://github.com/thomas-claireau/PHP-P8-Openclassrooms.git
+~ cd PHP-P8-Openclassrooms
 ```
 
 The project runs on Symfony 4.2, so it is necessary that you have Composer installed on your machine.
