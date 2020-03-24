@@ -22,6 +22,16 @@ Once downloaded, write this at the root of the project:
 ~ composer install
 ```
 
+If asked, choose "Yes for all packages" :
+
+```text
+Do you want to execute this recipe?
+[y] Yes
+[n] No
+[a] Yes for all packages, only for the current installation session
+[p] Yes permanently, never ask again for this project
+```
+
 Then install the front dependencies of the project.
 
 For this, you must have NodeJs on your machine. To install it, [follow this link](https://nodejs.org/en/download/).
