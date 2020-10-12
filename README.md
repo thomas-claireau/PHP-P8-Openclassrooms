@@ -109,3 +109,37 @@ Run phpunit tests by following command :
 ```
 ~ php bin/console doctrine:fixtures:load && php bin/phpunit
 ```
+
+## ✔️ Projet validé
+
+Commentaire de l'évaluateur :
+
+1. Évaluation globale du travail réalisé par l’étudiant (en spécifiant les critères non-validés si le projet est à retravailler) :
+
+Projet validé.
+
+2. Évaluation des livrables selon les critères du projet :
+
+Les livrables correspondent à ce qui est demandé.
+La nouvelle version de l’application est opérationnelle.
+
+3. Évaluation de la présentation orale et sa conformité aux attentes :
+
+Durée totale : 32:16 (dont 22:20 pour la présentation).
+La présentation orale est claire et bien structurée.
+Bonne maîtrise à la fois technique et des processus de développement.
+Note : suite à un problème technique, Thomas a dû redémarrer son pc. La présentation s’est passée normalement et l’incident a eu lieu peu après le démarrage des questions. La soutenance a donc été interrompue entre 23:00 et 23:57 (le temps de se rendre compte de la coupure) et l’enregistrement a été mis en pause. Une fois le problème résolu, nous avons repris la soutenance à l’endroit où nous avions été interrompus.
+
+4. Évaluation des nouvelles compétences acquises par l'étudiant :
+
+Les compétences techniques requises pour la validation de la mission sont acquises.
+
+5. Points positifs (au moins 1) :
+
+Support de présentation clair.
+Documentation technique claire et bien présentée.
+Utilisation de Webpack pour améliorer les performances.
+Documentation du processus de contribution au projet.
+6. Axes d'amélioration (au moins 1) :
+
+Bien revoir la différence entre tests unitaires et tests fonctionnels.
